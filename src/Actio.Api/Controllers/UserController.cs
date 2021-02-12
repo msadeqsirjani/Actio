@@ -14,7 +14,7 @@ namespace Actio.Api.Controllers
             _bus = bus;
         }
 
-        [HttpPost]
+        [HttpPost(Name = "Register")]
         public async Task<IActionResult> Post(CreateUser command)
         {
             await _bus.PublishAsync(command);
