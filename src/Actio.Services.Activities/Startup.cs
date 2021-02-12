@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Actio.Common.RabbitMq;
+using Actio.Services.Activities.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Actio.Services.Activities
@@ -28,10 +23,12 @@ namespace Actio.Services.Activities
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Activities", Version = "v1" });
-            });
+            services.AddRabbitMq(Configuration)
+                .RegisterCreateActivityService()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Activities", Version = "v1" });
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

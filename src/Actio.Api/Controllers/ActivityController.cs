@@ -22,7 +22,7 @@ namespace Actio.Api.Controllers
             command.CreatedAt = DateTime.UtcNow;
             await _bus.PublishAsync(command);
 
-            return Accepted(new Uri($"activity/{command.Id}"));
+            return Accepted($"activity/{command.Id}");
         }
     }
 }

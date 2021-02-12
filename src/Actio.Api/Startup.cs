@@ -1,3 +1,5 @@
+using Actio.Api.IoC;
+using Actio.Common.RabbitMq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,10 +23,12 @@ namespace Actio.Api
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Api", Version = "v1" });
-            });
+            services.AddRabbitMq(Configuration)
+                .RegisterActivityCreatedService()
+                .AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Api", Version = "v1" });
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

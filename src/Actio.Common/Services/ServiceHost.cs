@@ -1,11 +1,12 @@
-﻿using System;
-using Actio.Common.Commands;
+﻿using Actio.Common.Commands;
 using Actio.Common.Events;
 using Actio.Common.RabbitMq;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using RawRabbit;
+using System;
 
 namespace Actio.Common.Services
 {
@@ -30,8 +31,14 @@ namespace Actio.Common.Services
                 .Build();
 
             var webHostBuilder = WebHost.CreateDefaultBuilder()
+                .ConfigureLogging(logging =>
+                {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                })
                 .UseConfiguration(config)
-                .UseStartup<TStartup>();
+                .UseStartup<TStartup>()
+                .UseDefaultServiceProvider(options => options.ValidateScopes = false);
 
             return new HostBuilder(webHostBuilder.Build());
         }
@@ -74,7 +81,7 @@ namespace Actio.Common.Services
 
             public BusBuilder SubscribeToCommand<TCommand>() where TCommand : ICommand
             {
-                var handler = (ICommandHandler<TCommand>)_webHost.Services.GetService(typeof(ICommandHandler<>));
+                var handler = (ICommandHandler<TCommand>)_webHost.Services.GetService(typeof(ICommandHandler<TCommand>));
 
                 _bus.WithCommandHandlerAsync(handler);
 
@@ -83,7 +90,7 @@ namespace Actio.Common.Services
 
             public BusBuilder SubscribeToEvent<TEvent>() where TEvent : IEvent
             {
-                var handler = (IEventHandler<TEvent>)_webHost.Services.GetService(typeof(IEventHandler<>));
+                var handler = (IEventHandler<TEvent>)_webHost.Services.GetService(typeof(IEventHandler<TEvent>));
 
                 _bus.WithEventHandlerAsync(handler);
 
