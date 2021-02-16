@@ -24,8 +24,6 @@ namespace Actio.Services.Activities.Handlers
 
         public async Task HandleAsync(CreateActivity command)
         {
-            _logger.LogInformation($"Creating activity: {command.Category} {command.Name}");
-
             try
             {
                 await _activityService.AddAsync(command.Id, command.Name, command.Category, command.Description,
@@ -33,6 +31,8 @@ namespace Actio.Services.Activities.Handlers
 
                 await _bus.PublishAsync(new ActivityCreated(command.Id, command.UserId, command.Category, command.Name,
                     command.Description, command.CreatedAt));
+
+                _logger.LogInformation($"Creating activity: {command.Category} {command.Name}");
             }
             catch (ActioException ex)
             {

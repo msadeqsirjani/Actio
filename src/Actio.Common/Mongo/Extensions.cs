@@ -7,17 +7,22 @@ namespace Actio.Common.Mongo
 {
     public static class Extensions
     {
-        public static IServiceCollection AddMongoDb(this IServiceCollection services, IConfiguration configuration)
-        {
+        public static IServiceCollection AddMongoDb(this IServiceCollection services, IConfiguration configuration) =>
+            services.Configure<MongoOptions>(configuration.GetSection("Mongo"))
+                .AddSingleton(sp =>
+                {
+                    var options = sp.GetService<IOptions<MongoOptions>>();
 
-            services.Configure<MongoOptions>(configuration.GetSection("Mongo"));
-            var options = services.BuildServiceProvider().GetService<IOptions<MongoOptions>>();
-            services.AddSingleton(sp => new MongoClient(options?.Value.ConnectionString));
-            services.AddScoped(sp => sp.GetService<MongoClient>()?.GetDatabase(options?.Value.Database));
-            services.AddScoped<IDatabaseInitializer, MongoInitializer>();
-            services.AddScoped<IDatabaseSeeder, MongoSeeder>();
+                    return new MongoClient(options?.Value.ConnectionString);
+                })
+                .AddScoped(sp =>
+                {
+                    var options = sp.GetService<IOptions<MongoOptions>>();
+                    var client = sp.GetService<MongoClient>();
 
-            return services;
-        }
+                    return client?.GetDatabase(options?.Value.Database);
+                })
+                .AddScoped<IDatabaseInitializer, MongoInitializer>()
+                .AddScoped<IDatabaseSeeder, MongoSeeder>();
     }
 }
