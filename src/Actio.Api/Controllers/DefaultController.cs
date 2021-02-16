@@ -2,8 +2,8 @@
 
 namespace Actio.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     [Produces("application/json")]
     [Consumes("application/json")]
     public class DefaultController : ControllerBase

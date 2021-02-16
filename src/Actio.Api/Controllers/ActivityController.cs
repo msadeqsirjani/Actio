@@ -20,6 +20,7 @@ namespace Actio.Api.Controllers
         {
             command.Id = Guid.NewGuid();
             command.CreatedAt = DateTime.UtcNow;
+
             await _bus.PublishAsync(command);
 
             return Accepted($"activity/{command.Id}");
