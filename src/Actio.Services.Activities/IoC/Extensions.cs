@@ -21,5 +21,8 @@ namespace Actio.Services.Activities.IoC
 
         public static IServiceCollection RegisterCustomMongoSeeder(this IServiceCollection services) =>
             services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
+
+        public static IServiceCollection RegisterActivityService(this IServiceCollection services) =>
+            services.AddScoped<IActivityService, ActivityService>();
     }
 }

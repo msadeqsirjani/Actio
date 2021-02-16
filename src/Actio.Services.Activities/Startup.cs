@@ -31,6 +31,7 @@ namespace Actio.Services.Activities
                 .RegisterCategoryRepository()
                 .RegisterActivityRepository()
                 .RegisterCustomMongoSeeder()
+                .RegisterActivityService()
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Activities", Version = "v1" });
