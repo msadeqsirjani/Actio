@@ -11,19 +11,11 @@ namespace Actio.Common.Mongo
         {
 
             services.Configure<MongoOptions>(configuration.GetSection("Mongo"));
-
-            var provider = services.BuildServiceProvider();
-
-            var options = provider.GetService<IOptions<MongoOptions>>();
-
-            services.AddSingleton<MongoClient>(sp => new MongoClient(options?.Value.ConnectionSting))
-                .AddScoped(sp =>
-                {
-                    var client = provider.GetService<MongoClient>();
-
-                    return client?.GetDatabase(options?.Value.Database);
-                })
-                .AddScoped<IDatabaseInitializer, MongoInitializer>();
+            var options = services.BuildServiceProvider().GetService<IOptions<MongoOptions>>();
+            services.AddSingleton(sp => new MongoClient(options?.Value.ConnectionString));
+            services.AddScoped(sp => sp.GetService<MongoClient>()?.GetDatabase(options?.Value.Database));
+            services.AddScoped<IDatabaseInitializer, MongoInitializer>();
+            services.AddScoped<IDatabaseSeeder, MongoSeeder>();
 
             return services;
         }

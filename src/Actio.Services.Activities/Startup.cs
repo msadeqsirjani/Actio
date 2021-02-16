@@ -28,6 +28,9 @@ namespace Actio.Services.Activities
                 .AddMongoDb(Configuration)
                 .AddRabbitMq(Configuration)
                 .RegisterCreateActivityService()
+                .RegisterCategoryRepository()
+                .RegisterActivityRepository()
+                .RegisterCustomMongoSeeder()
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Activities", Version = "v1" });
@@ -43,6 +46,8 @@ namespace Actio.Services.Activities
                     .UseSwagger()
                     .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Actio.Services.Activities v1"));
             }
+
+            app.ApplicationServices.GetService<IDatabaseInitializer>()?.InitializeAsync();
 
             app.UseHttpsRedirection()
                 .UseRouting()

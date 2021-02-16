@@ -16,11 +16,13 @@ namespace Actio.Common.Mongo
     {
         private bool _initialized;
         private readonly IMongoDatabase _database;
+        private readonly IDatabaseSeeder _seeder;
         private readonly bool _seed;
 
-        public MongoInitializer(IMongoDatabase database, IOptions<MongoOptions> options)
+        public MongoInitializer(IMongoDatabase database, IDatabaseSeeder seeder, IOptions<MongoOptions> options)
         {
             _database = database;
+            _seeder = seeder;
             _seed = options.Value.Seed;
         }
 
@@ -31,6 +33,10 @@ namespace Actio.Common.Mongo
             RegisterConventions();
 
             _initialized = true;
+
+            if (!_seed) return Task.CompletedTask;
+
+            _seeder.SeedAsync();
 
             return Task.CompletedTask;
         }
