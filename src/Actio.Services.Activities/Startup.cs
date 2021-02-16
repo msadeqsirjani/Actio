@@ -1,3 +1,4 @@
+using Actio.Common.Mongo;
 using Actio.Common.RabbitMq;
 using Actio.Services.Activities.IoC;
 using Microsoft.AspNetCore.Builder;
@@ -23,7 +24,9 @@ namespace Actio.Services.Activities
         {
 
             services.AddControllers();
-            services.AddRabbitMq(Configuration)
+            services.AddLogging()
+                .AddMongoDb(Configuration)
+                .AddRabbitMq(Configuration)
                 .RegisterCreateActivityService()
                 .AddSwaggerGen(c =>
                 {
@@ -36,21 +39,15 @@ namespace Actio.Services.Activities
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Actio.Services.Activities v1"));
+                app.UseDeveloperExceptionPage()
+                    .UseSwagger()
+                    .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Actio.Services.Activities v1"));
             }
 
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseHttpsRedirection()
+                .UseRouting()
+                .UseAuthorization()
+                .UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }
