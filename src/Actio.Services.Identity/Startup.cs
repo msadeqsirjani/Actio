@@ -29,6 +29,7 @@ namespace Actio.Services.Identity
                 .RegisterEncryptionService()
                 .RegisterCreateUserService()
                 .RegisterUserRepository()
+                .RegisterUserService()
                 .AddSwaggerGen(options =>
                 {
                     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Identity", Version = "v1" });
@@ -44,8 +45,6 @@ namespace Actio.Services.Identity
                     .UseSwagger()
                     .UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Actio.Services.Identity v1"));
             }
-
-            app.ApplicationServices.GetService<IDatabaseInitializer>()?.InitializeAsync();
 
             app.UseHttpsRedirection()
                 .UseRouting()

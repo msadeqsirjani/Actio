@@ -3,6 +3,7 @@ using Actio.Services.Identity.Domain.Repositories;
 using Actio.Services.Identity.Domain.Services;
 using Actio.Services.Identity.Handlers;
 using Actio.Services.Identity.Repositories;
+using Actio.Services.Identity.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Actio.Services.Identity.IoC
@@ -17,5 +18,8 @@ namespace Actio.Services.Identity.IoC
 
         public static IServiceCollection RegisterUserRepository(this IServiceCollection services) =>
             services.AddScoped<IUserRepository, UserRepository>();
+
+        public static IServiceCollection RegisterUserService(this IServiceCollection services) =>
+            services.AddScoped<IUserService, UserService>();
     }
 }
