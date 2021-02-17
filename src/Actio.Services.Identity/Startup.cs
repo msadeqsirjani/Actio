@@ -1,4 +1,6 @@
+using Actio.Common.Mongo;
 using Actio.Common.RabbitMq;
+using Actio.Services.Identity.IoC;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -20,12 +22,16 @@ namespace Actio.Services.Identity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
-            services.AddRabbitMq(Configuration)
-                .AddSwaggerGen(c =>
+            services.AddLogging()
+                .AddMongoDb(Configuration)
+                .AddRabbitMq(Configuration)
+                .RegisterEncryptionService()
+                .RegisterCreateUserService()
+                .RegisterUserRepository()
+                .AddSwaggerGen(options =>
                 {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Identity", Version = "v1" });
+                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Identity", Version = "v1" });
                 });
         }
 
@@ -34,21 +40,17 @@ namespace Actio.Services.Identity
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Actio.Services.Identity v1"));
+                app.UseDeveloperExceptionPage()
+                    .UseSwagger()
+                    .UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Actio.Services.Identity v1"));
             }
 
-            app.UseHttpsRedirection();
+            app.ApplicationServices.GetService<IDatabaseInitializer>()?.InitializeAsync();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseHttpsRedirection()
+                .UseRouting()
+                .UseAuthorization()
+                .UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }
