@@ -46,7 +46,6 @@ namespace Actio.Common.Mongo
             ConventionRegistry.Register("ActioConventions", new MongoConventions(), x => true);
         }
 
-
         private class MongoConventions : IConventionPack
         {
             public IEnumerable<IConvention> Conventions => new List<IConvention>

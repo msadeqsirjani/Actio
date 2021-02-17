@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Actio.Common.Exceptions;
+using System;
 
 namespace Actio.Services.Activities.Domain.Models
 {
@@ -9,6 +10,9 @@ namespace Actio.Services.Activities.Domain.Models
 
         public Category(string name)
         {
+            if (name.IsNullOrWhiteSpace())
+                throw new ActioException("empty_category_name", "Category name can not be empty.");
+
             Id = Guid.NewGuid();
             Name = name.ToLowerInvariant();
         }

@@ -14,7 +14,7 @@ namespace Actio.Services.Activities.Domain.Models
 
         public Activity(Guid id, string name, Category category, string description, Guid userId, DateTime createdAt)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (name.IsNullOrWhiteSpace())
                 throw new ActioException("empty_activity_name", "Activity name can not be empty.");
 
             Id = id;
