@@ -18,7 +18,7 @@ namespace Actio.Services.Identity.Domain.Models
             if (email.IsNullOrWhiteSpace())
                 throw new ActioException("empty_user_email", "User email can not be empty");
 
-            if (email.IsValidEmail())
+            if (!email.IsValidEmail())
                 throw new ActioException("invalid_user_email", "User email was not valid");
 
             if (name.IsNullOrWhiteSpace())
