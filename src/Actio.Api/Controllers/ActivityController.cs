@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Actio.Api.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ActivityController : DefaultController
     {
         private readonly IBusClient _bus;
@@ -18,14 +19,14 @@ namespace Actio.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public IActionResult Get() => Content("Secured");
+        public IActionResult Get() => Content("Secured")
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateActivity command)
         {
             command.Id = Guid.NewGuid();
             command.CreatedAt = DateTime.UtcNow;
+            command.UserId = (Guid)User?.Identity?.Name!.ToGuid();
 
             await _bus.PublishAsync(command);
 
