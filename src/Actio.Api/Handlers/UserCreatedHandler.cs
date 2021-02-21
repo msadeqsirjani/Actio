@@ -15,7 +15,7 @@ namespace Actio.Api.Handlers
 
         public Task HandleAsync(UserCreated @event)
         {
-            _logger.LogInformation($"User published: {@event.Email} {@event.Name}");
+            _logger.LogInformation($"User creating: {@event.Email} {@event.Name}");
 
             return Task.CompletedTask;
         }

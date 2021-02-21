@@ -15,7 +15,7 @@ namespace Actio.Api.Handlers
 
         public Task HandleAsync(ActivityCreated @event)
         {
-            _logger.LogInformation($"Activity published: {@event.Category} {@event.Name}");
+            _logger.LogInformation($"Activity creating: {@event.Category} {@event.Name}");
 
             return Task.CompletedTask;
         }

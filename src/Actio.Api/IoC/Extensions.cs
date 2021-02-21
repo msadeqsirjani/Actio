@@ -11,5 +11,8 @@ namespace Actio.Api.IoC
 
         public static IServiceCollection AddUserCreatedService(this IServiceCollection services) =>
             services.AddScoped<IEventHandler<UserCreated>, UserCreatedHandler>();
+
+        public static IServiceCollection AddUserAuthenticatedService(this IServiceCollection services) =>
+            services.AddScoped<IEventHandler<UserAuthenticated>, UserAuthenticatedHandler>();
     }
 }

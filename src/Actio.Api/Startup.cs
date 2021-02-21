@@ -29,6 +29,7 @@ namespace Actio.Api
                 .AddJwt(Configuration)
                 .AddActivityCreatedService()
                 .AddUserCreatedService()
+                .AddUserAuthenticatedService()
                 .AddSwaggerGen(options =>
                 {
                     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Api", Version = "v1" });
