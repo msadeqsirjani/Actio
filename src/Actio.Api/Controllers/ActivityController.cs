@@ -1,4 +1,6 @@
 ﻿using Actio.Common.Commands;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RawRabbit;
 using System;
@@ -14,6 +16,10 @@ namespace Actio.Api.Controllers
         {
             _bus = bus;
         }
+
+        [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public IActionResult Get() => Content("Secured");
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateActivity command)

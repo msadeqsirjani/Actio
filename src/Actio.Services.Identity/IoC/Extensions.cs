@@ -10,16 +10,16 @@ namespace Actio.Services.Identity.IoC
 {
     public static class Extensions
     {
-        public static IServiceCollection RegisterCreateUserService(this IServiceCollection services) =>
+        public static IServiceCollection AddCreateUserService(this IServiceCollection services) =>
             services.AddScoped<ICommandHandler<CreateUser>, CreateUserHandler>();
 
-        public static IServiceCollection RegisterEncryptionService(this IServiceCollection services) =>
+        public static IServiceCollection AddEncryptionService(this IServiceCollection services) =>
             services.AddScoped<IEncryption, Encryption>();
 
-        public static IServiceCollection RegisterUserRepository(this IServiceCollection services) =>
+        public static IServiceCollection AddUserRepository(this IServiceCollection services) =>
             services.AddScoped<IUserRepository, UserRepository>();
 
-        public static IServiceCollection RegisterUserService(this IServiceCollection services) =>
+        public static IServiceCollection AddUserService(this IServiceCollection services) =>
             services.AddScoped<IUserService, UserService>();
     }
 }

@@ -1,3 +1,4 @@
+using Actio.Common.Authentication;
 using Actio.Common.Mongo;
 using Actio.Common.RabbitMq;
 using Actio.Services.Identity.IoC;
@@ -26,10 +27,11 @@ namespace Actio.Services.Identity
             services.AddLogging()
                 .AddMongoDb(Configuration)
                 .AddRabbitMq(Configuration)
-                .RegisterEncryptionService()
-                .RegisterCreateUserService()
-                .RegisterUserRepository()
-                .RegisterUserService()
+                .AddJwt(Configuration)
+                .AddEncryptionService()
+                .AddCreateUserService()
+                .AddUserRepository()
+                .AddUserService()
                 .AddSwaggerGen(options =>
                 {
                     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Identity", Version = "v1" });

@@ -10,19 +10,19 @@ namespace Actio.Services.Activities.IoC
 {
     public static class Extensions
     {
-        public static IServiceCollection RegisterCreateActivityService(this IServiceCollection services) =>
+        public static IServiceCollection AddCreateActivityService(this IServiceCollection services) =>
             services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
 
-        public static IServiceCollection RegisterCategoryRepository(this IServiceCollection services) =>
+        public static IServiceCollection AddCategoryRepository(this IServiceCollection services) =>
             services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-        public static IServiceCollection RegisterActivityRepository(this IServiceCollection services) =>
+        public static IServiceCollection AddActivityRepository(this IServiceCollection services) =>
             services.AddScoped<IActivityRepository, ActivityRepository>();
 
-        public static IServiceCollection RegisterCustomMongoSeeder(this IServiceCollection services) =>
+        public static IServiceCollection AddCustomMongoSeeder(this IServiceCollection services) =>
             services.AddScoped<IDatabaseSeeder, CustomMongoSeeder>();
 
-        public static IServiceCollection RegisterActivityService(this IServiceCollection services) =>
+        public static IServiceCollection AddActivityService(this IServiceCollection services) =>
             services.AddScoped<IActivityService, ActivityService>();
     }
 }

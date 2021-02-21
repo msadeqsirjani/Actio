@@ -25,7 +25,8 @@ namespace Actio.Common.Authentication
             {
                 ValidateAudience = false,
                 ValidateIssuer = true,
-                ValidIssuer = _options.Issuer
+                ValidIssuer = _options.Issuer,
+                IssuerSigningKey = issuerSigningKey
             };
         }
 

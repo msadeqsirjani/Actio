@@ -14,12 +14,12 @@ namespace Actio.Api.Controllers
             _bus = bus;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(CreateUser command)
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Register(CreateUser command)
         {
             await _bus.PublishAsync(command);
 
-            return Accepted("user");
+            return Accepted("user/register");
         }
     }
 }

@@ -27,14 +27,14 @@ namespace Actio.Services.Activities
             services.AddLogging()
                 .AddMongoDb(Configuration)
                 .AddRabbitMq(Configuration)
-                .RegisterCreateActivityService()
-                .RegisterCategoryRepository()
-                .RegisterActivityRepository()
-                .RegisterCustomMongoSeeder()
-                .RegisterActivityService()
-                .AddSwaggerGen(c =>
+                .AddCreateActivityService()
+                .AddCategoryRepository()
+                .AddActivityRepository()
+                .AddCustomMongoSeeder()
+                .AddActivityService()
+                .AddSwaggerGen(options =>
                 {
-                    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Activities", Version = "v1" });
+                    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Actio.Services.Activities", Version = "v1" });
                 });
         }
 
@@ -45,7 +45,7 @@ namespace Actio.Services.Activities
             {
                 app.UseDeveloperExceptionPage()
                     .UseSwagger()
-                    .UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Actio.Services.Activities v1"));
+                    .UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "Actio.Services.Activities v1"));
             }
 
             app.ApplicationServices.GetService<IDatabaseInitializer>()?.InitializeAsync();
