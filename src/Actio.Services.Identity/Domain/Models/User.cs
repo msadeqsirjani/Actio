@@ -35,7 +35,7 @@ namespace Actio.Services.Identity.Domain.Models
             if (password.IsNullOrWhiteSpace())
                 throw new ActioException("empty_user_password", "User password can not be empty");
 
-            Salt = encryption.GetSalt(password);
+            Salt = encryption.GetSalt();
             Password = encryption.GetHash(password, Salt);
         }
 

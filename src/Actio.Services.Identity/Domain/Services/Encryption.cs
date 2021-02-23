@@ -7,7 +7,7 @@ namespace Actio.Services.Identity.Domain.Services
         private const int SaltSize = 40;
         private const int DeriveBytesIterationsCount = 10000;
 
-        public string GetSalt(string value)
+        public string GetSalt()
         {
             var saltBytes = new byte[SaltSize];
             var rng = RandomNumberGenerator.Create();

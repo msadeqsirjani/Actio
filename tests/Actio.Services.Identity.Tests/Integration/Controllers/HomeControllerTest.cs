@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Actio.Services.Activities.Tests.Integration.Controllers
+namespace Actio.Services.Identity.Tests.Integration.Controllers
 {
     public class HomeControllerTest
     {
@@ -29,7 +29,7 @@ namespace Actio.Services.Activities.Tests.Integration.Controllers
             var content = await response.Content.ReadAsStringAsync();
 
             content.Should().NotBeNullOrEmpty();
-            content.Should().IsSameOrEqualTo("Hello from Actio.Service.Activities Api");
+            content.Should().IsSameOrEqualTo("Hello from Actio.Service.Identity Api");
         }
     }
 }
