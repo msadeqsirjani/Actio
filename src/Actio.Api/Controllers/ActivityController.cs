@@ -19,7 +19,7 @@ namespace Actio.Api.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get() => Content("Secured")
+        public IActionResult Get() => Content("Secured");
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateActivity command)
@@ -30,7 +30,7 @@ namespace Actio.Api.Controllers
 
             await _bus.PublishAsync(command);
 
-            return Accepted($"activity/{command.Id}");
+            return Accepted($"  {command.Id}");
         }
     }
 }
