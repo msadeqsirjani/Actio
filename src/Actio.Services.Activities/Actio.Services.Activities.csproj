@@ -17,4 +17,6 @@
     <ProjectReference Include="..\Actio.Common\Actio.Common.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+
 </Project>
